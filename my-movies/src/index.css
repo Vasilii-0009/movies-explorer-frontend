@@ -1,0 +1,53 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* normalize */
+@import url(./vendor/normalize.css);
+
+/* Header */
+/* @import url(../src/components/Header/Header.css); */
+/* @import url(../src/components/Header/HeaderMovies.js/HeaderMovies.js.css); */
+
+/* Main */
+/* @import url(../src/components/Main/Main.css); */
+
+/* Main => promo */
+/* @import url(../src/components/Main/Promo/Promo.css); */
+
+/* Main => AboutProject  */
+/* @import url(../src/components/Main/AboutProject/AboutProject.css); */
+
+/* Main => Techs  */
+/* @import url(../src/components/Main/Techs/Techs.css); */
+
+/* Main => AboutMe  */
+/* @import url(../src/components/Main/AboutMe/AboutMe.css); */
+
+/* Main => Portfolio  */
+/* @import url(../src/components/Main/Portfolio/Portfolio.css); */
+
+/* Main => PortfolioGeneral  */
+/* @import url(../src/components/Main/Portfolio/PortfolioGenaral.css); */
+
+/* Footer */
+/* @import url(../src/components/Footer/Footer.css); */
+
+/* WindowWithForm */
+/* @import url(../src/components/WindowWithForm/WindowWithForm.css); */
+
+/* Register */
+/* @import url(../src/components/Register/Register.css); */
+
+/* Movies => SearchForm */
+/* @import url(../src/components/Movies/SearchForm/SearchForm.css) */

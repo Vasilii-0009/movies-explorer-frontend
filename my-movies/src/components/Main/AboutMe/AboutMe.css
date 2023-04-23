@@ -1,0 +1,142 @@
+.aboutme {
+   background-color: #202020;
+   padding: 110px 0 125px 0;
+}
+
+.aboutme__box {
+   display: flex;
+   justify-content: space-between;
+   margin-top: 66px;
+}
+
+.aboutme__info {
+   max-width: 580px;
+   width: 100%;
+   margin-right: 20px;
+}
+
+.aboutme__avtor-name {
+   font-weight: 400;
+   font-size: 50px;
+   line-height: 58px;
+   letter-spacing: -0.04em;
+}
+
+.aboutme__avtor-about {
+   font-weight: 500;
+   font-size: 18px;
+   line-height: 20px;
+   margin: 18px 0 26px 0;
+}
+
+.aboutme__avtor-info {
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 22px;
+}
+
+.aboutme__avtor-github {
+   font-weight: 500;
+   font-size: 14px;
+   line-height: 17px;
+   margin-top: 99px;
+   display: block;
+   text-decoration: none;
+   color: #fff;
+}
+
+.aboutme__image-avtor {
+   max-width: 270px;
+   max-height: 327px;
+   min-width: 255px;
+   min-height: 307px;
+   width: 100%;
+   height: 100%;
+}
+
+@media(max-width:768px) {
+   .aboutme {
+      padding: 90px 0;
+   }
+
+   .aboutme__avtor-name {
+      font-size: 40px;
+      line-height: 40px;
+   }
+
+   .aboutme__avtor-about {
+      font-size: 12px;
+      line-height: 18px;
+      margin: 16px 0 20px 0;
+   }
+
+   .aboutme__avtor-info {
+      font-size: 12px;
+      line-height: 18px;
+   }
+
+   .aboutme__avtor-github {
+      margin-top: 87px;
+   }
+
+   .aboutme__image-avtor {
+      max-width: 255px;
+      max-height: 307px;
+      min-width: 205px;
+      min-height: 267px;
+      width: 100%;
+      height: 100%;
+   }
+
+   .aboutme__info {
+      max-width: 364px;
+   }
+}
+
+@media(max-width:420px) {
+   .aboutme {
+      padding: 70px 0;
+   }
+
+   .aboutme__box {
+      flex-direction: column-reverse;
+      margin-top: 60px;
+   }
+
+   .aboutme__avtor-name {
+      margin: 40px 0 20px 0;
+      font-size: 30px;
+      line-height: 36px;
+   }
+
+   .aboutme__image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+   }
+
+   .aboutme__image-avtor {
+      max-width: 292px;
+      max-height: 352px;
+      width: 100%;
+      height: 100%;
+   }
+
+   .aboutme__avtor-about {
+      font-size: 11px;
+      line-height: 16px;
+   }
+
+   .aboutme__avtor-info {
+      font-size: 11px;
+      line-height: 16px;
+   }
+
+   .aboutme__avtor-github {
+      margin-top: 40px;
+   }
+
+   .aboutme__info {
+      margin-right: 0px;
+   }
+}

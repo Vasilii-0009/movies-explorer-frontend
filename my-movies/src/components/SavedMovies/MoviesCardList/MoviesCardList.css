@@ -1,0 +1,9 @@
+.card-list__space {
+   padding-bottom: 247px;
+}
+
+@media(max-width:991px) {
+   .card-list__space {
+      padding-bottom: 140px;
+   }
+}

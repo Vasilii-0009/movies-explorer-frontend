@@ -11,14 +11,14 @@ function HeaderMovies(props) {
             <NavLink to='/'><img className='header-movies__logo' alt='Логотип' src={logo} /></NavLink>
             <div className='header-movies__box-nav'>
                <div className='header-movies__box-film'>
-                  <NavLink to="/movies" className='header-movies__film'>Фильмы</NavLink>
-                  <NavLink to="/saved-movies" className='header-movies__save-film'>Сохранённые Фильмы</NavLink>
+                  <NavLink to="/movies" className={({ isActive }) => ` header-movies__film ${isActive ? "header-movies__film-active" : ""}`}>Фильмы</NavLink>
+                  <NavLink to="/saved-movies" className={({ isActive }) => `header-movies__save-film ${isActive ? "header-movies__film-active" : ""}`}>Сохранённые Фильмы</NavLink>
                </div>
                <Acaunt />
             </div>
             <div onClick={props.onClick} className={` header-movies__burger ${props.isBurger}`} ><span className='header-movies__burger-line'></span></div>
          </div>
-      </header>
+      </header >
    )
 }
 

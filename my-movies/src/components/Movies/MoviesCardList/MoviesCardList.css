@@ -34,4 +34,10 @@
    padding: 11px 0 9px 0;
    background-color: #2F2F2F;
    border-radius: 6px;
+   transition: all .3s linear;
+}
+
+.block-more__btn:hover {
+   transition: all .3s linear;
+   opacity: .7;
 }

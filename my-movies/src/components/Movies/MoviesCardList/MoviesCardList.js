@@ -41,11 +41,11 @@ function MoviesCardsList() {
             })
          }
          </MoviesGeneralLIstCards >
-         <div className="block-more">
+         <section className="block-more">
             <div className="container ">
                <div className="block-more__btn">Ещё</div>
             </div>
-         </div>
+         </section>
       </>
    )
 }

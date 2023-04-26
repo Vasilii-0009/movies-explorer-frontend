@@ -4,6 +4,7 @@
    display: flex;
    flex-direction: column;
    align-items: center;
+   min-height: 100%;
 }
 
 .window-form__box {
@@ -26,6 +27,7 @@
 .window-form__form {
    display: flex;
    flex-direction: column;
+
 }
 
 @media(max-width:420px) {

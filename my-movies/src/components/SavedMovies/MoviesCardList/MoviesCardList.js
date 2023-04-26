@@ -5,7 +5,7 @@ import MoviesCard from '../MoviesCard/MoviesCard'
 import './MoviesCardList.css'
 
 function SaveMoviesCardList() {
-   const cardSpace = (`card-list__space`)
+   const cardSpace = (`card-list-space`)
    return (
       <MoviesGeneralLIstCards cardSpace={cardSpace}>
          {

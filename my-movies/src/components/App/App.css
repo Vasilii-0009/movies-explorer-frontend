@@ -1,5 +1,5 @@
 .App {
+   height: 100%;
    font-family: 'Inter', sans-serif;
-   color: #fff;
-   position: relative;
+   color: hsl(0, 0%, 100%);
 }

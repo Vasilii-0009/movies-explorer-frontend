@@ -11,6 +11,14 @@
    margin-bottom: 50px;
 }
 
+.portfolio__item {
+   margin-top: 19px;
+}
+
+.portfolio__item:first-child {
+   margin: 0px;
+}
+
 @media(max-width:768px) {
    .portfolio {
       padding-bottom: 90px;

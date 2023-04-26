@@ -4,8 +4,8 @@ import promo from '../../../images/promo.svg';
 
 function Promo() {
    return (
-      <section className='promom'>
-         <div className='promom__box container'>
+      <section className='promo'>
+         <div className='promo__box container'>
             <div className='promo__text'>
                <h1 className='promo__title'>Учебный проект студента факультета  Веб-разработки.</h1>
                <h3 className='promo__sub-title'>Листайте ниже, чтобы узнать больше про этот проект и его создателя.</h3>

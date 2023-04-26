@@ -3,6 +3,20 @@
    padding: 110px 0 125px 0;
 }
 
+.aboutme__title {
+   font-weight: 400;
+   font-size: 22px;
+   line-height: 27px;
+   letter-spacing: -0.04em;
+}
+
+.aboutme__title::after {
+   content: '';
+   border-bottom: 1px solid #DADADA;
+   display: block;
+   margin-top: 23px;
+}
+
 .aboutme__box {
    display: flex;
    justify-content: space-between;
@@ -96,6 +110,15 @@
 @media(max-width:420px) {
    .aboutme {
       padding: 70px 0;
+   }
+
+   .aboutme__title {
+      font-size: 18px;
+      line-height: 22px;
+   }
+
+   .aboutme__title::after {
+      margin-top: 28px;
    }
 
    .aboutme__box {

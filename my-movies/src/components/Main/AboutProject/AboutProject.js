@@ -4,8 +4,8 @@ import { React } from 'react'
 function AboutProject() {
    return (
       <section className='project'>
-         <div className='container'>
-            <h3 className='project__title general__title'>О проекте</h3>
+         <div className='project__container container'>
+            <h3 className='project__title'>О проекте</h3>
             <div className='project__box'>
                <div className='project__etap project__general'>
                   <h4 className='project__etap-title project__general-title'>Дипломный проект включал 5 этапов</h4>

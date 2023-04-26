@@ -31,6 +31,12 @@
    font-weight: 500;
    font-size: 12px;
    line-height: 16px;
+   transition: all .2s linear;
+}
+
+.header__sign:hover {
+   transition: all .2s linear;
+   opacity: .7;
 }
 
 .header__sign-in {
@@ -44,6 +50,7 @@
    margin-right: 30px;
    color: #fff;
 }
+
 
 @media (max-width:991px) {
    .container {

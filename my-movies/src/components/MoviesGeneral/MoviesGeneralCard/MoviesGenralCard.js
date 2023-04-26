@@ -5,8 +5,7 @@ function MoviesCard(props) {
    return (
       <div className='card'>
          <div>
-            <div style={{ backgroundImage: `url(${props.cardInfo.link})` }}
-               className="card__img" ></div>
+            <img src={props.cardInfo.link} alt='обложка фильма' className="card__img" />
          </div>
 
          <div className="card__box-info">

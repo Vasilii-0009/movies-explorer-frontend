@@ -7,10 +7,9 @@
 .card__img {
    width: 364px;
    height: 203px;
-   background-size: cover;
    border-radius: 6px 6px 0 0;
-   background-size: cover;
    position: relative;
+   object-fit: cover;
 }
 
 .card__box-info {

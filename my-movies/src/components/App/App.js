@@ -50,6 +50,7 @@ function App() {
       <div className="App">
          <Routes>
             <Route path="/" element={<Layoute isBurger={isBurger} onClick={ShowNavigition} />} >
+
                <Route path='/' element={
                   <>
                      <Main />

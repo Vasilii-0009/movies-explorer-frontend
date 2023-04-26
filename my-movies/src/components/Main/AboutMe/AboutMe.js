@@ -6,7 +6,7 @@ function AboutMe() {
    return (
       <section className='aboutme'>
          <div className='container'>
-            <h3 className='aboutme__title general__title'>Студент </h3>
+            <h3 className='aboutme__title'>Студент </h3>
             <div className='aboutme__box'>
                <div className='aboutme__info'>
                   <div className='aboutme__avtor-name'>Виталий</div>

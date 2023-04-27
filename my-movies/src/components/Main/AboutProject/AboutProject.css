@@ -1,0 +1,153 @@
+.project {
+   background-color: #202020;
+   padding: 110px 0;
+}
+
+.project__title {
+   font-weight: 400;
+   font-size: 22px;
+   line-height: 27px;
+   letter-spacing: -0.04em;
+}
+
+.project__title::after {
+   content: '';
+   border-bottom: 1px solid #DADADA;
+   display: block;
+   margin-top: 23px;
+}
+
+.project__box {
+   display: flex;
+   justify-content: space-between;
+   margin: 70px 0 110px 0;
+}
+
+.project__etap {
+   margin-right: 30px;
+}
+
+.project__general {
+   max-width: 550px;
+}
+
+.project__general-title {
+   font-weight: 400;
+   font-size: 20px;
+   line-height: 24px;
+   letter-spacing: -0.04em;
+   margin-bottom: 26px;
+}
+
+.project__general-text {
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 20px;
+}
+
+.project__box-week {
+   display: flex;
+   min-height: 36px;
+   margin-bottom: 14px;
+}
+
+.project__one-week {
+   max-width: 228px;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: #3DDC84;
+   color: #000;
+}
+
+.project__four-week {
+   max-width: 912px;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: #303030;
+}
+
+.project__box-end {
+   display: flex;
+}
+
+
+.project__back-end {
+   max-width: 228px;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: #8B8B8B;
+}
+
+.project__front-end {
+   max-width: 912px;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: #8B8B8B;
+}
+
+.project-general-week {
+   font-size: 14px;
+   line-height: 17px;
+}
+
+@media(max-width:768px) {
+   .project {
+      padding: 90px 0;
+   }
+}
+
+@media(max-width:420px) {
+   .project {
+      padding: 70px 0;
+   }
+
+   .project__title {
+      font-size: 18px;
+      line-height: 22px;
+   }
+
+   .project__title::after {
+      margin-top: 28px;
+   }
+
+   .project__box {
+      flex-direction: column;
+      margin: 60px 0;
+   }
+
+   .project__general-title {
+      font-size: 18px;
+      line-height: 22px;
+      margin-bottom: 16px;
+   }
+
+   .project__general-text {
+      font-size: 11px;
+      line-height: 16px;
+   }
+
+   .project__etap {
+      margin-bottom: 56px;
+   }
+
+   .project__one-week {
+      max-width: 100px;
+   }
+
+   .project-general-week {
+      font-size: 11px;
+      line-height: 13px;
+   }
+
+   .project__back-end {
+      max-width: 100px;
+   }
+}

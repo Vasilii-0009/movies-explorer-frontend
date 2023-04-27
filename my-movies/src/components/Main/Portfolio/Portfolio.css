@@ -1,0 +1,38 @@
+.portfolio {
+   background-color: #202020;
+   padding-bottom: 125px;
+}
+
+.portfolio__title {
+   font-weight: 400;
+   font-size: 18px;
+   line-height: 20px;
+   color: #8B8B8B;
+   margin-bottom: 50px;
+}
+
+.portfolio__item {
+   margin-top: 19px;
+}
+
+.portfolio__item:first-child {
+   margin: 0px;
+}
+
+@media(max-width:768px) {
+   .portfolio {
+      padding-bottom: 90px;
+   }
+}
+
+@media(max-width:420px) {
+   .portfolio {
+      padding-bottom: 70px;
+   }
+
+   .portfolio__title {
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 40px;
+   }
+}

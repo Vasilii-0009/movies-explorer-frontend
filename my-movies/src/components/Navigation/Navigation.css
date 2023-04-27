@@ -1,0 +1,59 @@
+.link {
+   text-decoration: none;
+   color: #fff;
+   border-bottom: 2px solid rgba(255, 255, 255, 0);
+   padding-bottom: 4px;
+}
+
+.link:hover {
+   border-color: rgba(255, 255, 255, 1);
+   transition: all .3s linear;
+}
+
+.navigation {
+   background-color: #202020;
+   height: 100vh;
+   max-width: 520px;
+   width: 100%;
+   display: none;
+   flex-direction: column;
+   align-items: flex-end;
+   position: fixed;
+   right: 0;
+   top: 0;
+}
+
+.navigation-show {
+   display: flex;
+}
+
+.navigation-show html {
+   overflow: hidden;
+}
+
+
+.navigation__container {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-between;
+   padding: 159px 0 90px 0;
+   overflow: auto;
+}
+
+.navigation__box-movies {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.navigation__movies {
+   margin: 28px 0;
+}
+
+.navigation__box-acount {
+   margin-bottom: 90px;
+   border: 1px solid red;
+}

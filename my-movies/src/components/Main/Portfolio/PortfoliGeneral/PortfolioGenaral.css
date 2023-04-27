@@ -1,0 +1,36 @@
+.portfolio__general {
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 20px;
+}
+
+.portfolio__general-title {
+   font-weight: 400;
+   font-size: 30px;
+   line-height: 50px;
+   letter-spacing: -0.04em;
+}
+
+.portfolio__general-line {
+   width: 100%;
+   height: 1px;
+   background-color: #DADADA;
+}
+
+.portfolio__general-line:last-child {
+   border-bottom: none;
+   margin: 0;
+}
+
+@media(max-width:768px) {
+   .portfolio__general-title {
+      font-size: 28px;
+   }
+}
+
+@media(max-width:420px) {
+   .portfolio__general-title {
+      font-size: 18px;
+      line-height: 28px;
+   }
+}

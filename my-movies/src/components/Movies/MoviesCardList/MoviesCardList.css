@@ -21,23 +21,27 @@
    border-radius: 6px;
    margin-top: 50px;
 } */
-.block-more {
-   background-color: #202020;
-   padding: 50px 0 80px 0;
+/* .block-more {
+  background-color: #202020;
+  padding: 50px 0 80px 0;
+}
+
+.block-more.bloke-more-hiden {
+  display: none;
 }
 
 .block-more__btn {
-   width: 100%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   padding: 11px 0 9px 0;
-   background-color: #2F2F2F;
-   border-radius: 6px;
-   transition: all .3s linear;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 11px 0 9px 0;
+  background-color: #2f2f2f;
+  border-radius: 6px;
+  transition: all 0.3s linear;
 }
 
 .block-more__btn:hover {
-   transition: all .3s linear;
-   opacity: .7;
-}
+  transition: all 0.3s linear;
+  opacity: 0.7;
+} */

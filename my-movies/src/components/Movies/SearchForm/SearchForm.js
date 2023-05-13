@@ -1,53 +1,107 @@
-import './SearchForm.css'
-import { React, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import "./SearchForm.css";
+import { React, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
-function SearchForm() {
+function SearchForm(props) {
+  const moviesSearchText = localStorage.getItem("messageSearch");
+  const searchScheckBox = localStorage.getItem("stateCheckbox");
+  const res = JSON.parse(searchScheckBox);
+  // const [isMoviesSearchText, setMoviesSearchText] = useState(null);
+  const [isActive, setActive] = useState("");
 
-   const {
-      register,
-      formState: {
-         errors
-      },
-      handleSubmit
-   } = useForm({
-      mode: "onSubmit"
-   })
+  useEffect(() => {
+    if (res === true) {
+      setActive("visible-checkbox_active");
+    } else {
+    }
+  }, []);
 
-   function handleFormSubmit() {
-      props.handeleRegisterUser()
-   }
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    watch,
+  } = useForm({
+    mode: "onSubmit",
+  });
 
-   const [isActive, setActive] = useState('')
-   function handleActiveBtn() {
-      if (isActive === 'search-form__btn-regular_active') {
-         setActive('')
-      } else {
-         setActive('search-form__btn-regular_active')
-      }
+  function handleFormSubmit(dataMeassage) {
+    localStorage.setItem("messageSearch", dataMeassage.film);
+    props.searchMovies();
+  }
 
-   }
-   return (
-      <section className='search-form'>
-         <div className='search-form__container container'>
-            <form onSubmit={handleSubmit(handleFormSubmit)} className='search-form__box'>
-               <input {...register("film",
-                  {
-                     required: true
-                  }
-               )} className='search-form__input' type='text' placeholder='Фильм'></input>
-               <button type='submit' className='search-form__btn'>Найти</button>
-            </form>
-            <div className='search-form__box-btn'>
-               <div onClick={handleActiveBtn} className={` search-form__btn-regular ${isActive}`} >
-                  <div className='search-form__btn-round'></div>
-               </div>
-               <p className='search-form__text-regular'>Короткометражки</p>
-            </div>
-            <div className='search-form__line'></div>
-         </div>
-      </section >
-   )
+  function handleCheckbox() {
+    if (moviesSearchText !== null) {
+      console.log("moviesSearchText moviesSearchText", moviesSearchText);
+      props.searchMovies();
+    }
+  }
+
+  // if (isMoviesSearchText !== null) {
+  //   console.log("truetrue truetrue truetrue ");
+  //   props.searchMovies();
+  // }
+  const watchCheckbox = watch((value) => {
+    // setActiveClick(true);
+    localStorage.setItem("stateCheckbox", value.checkbox);
+
+    if (value.checkbox === true) {
+      setActive("visible-checkbox_active");
+    } else {
+      setActive(" ");
+    }
+  });
+
+  return (
+    <>
+      <section className="search-form">
+        <div className="search-form__container container">
+          <form
+            onSubmit={handleSubmit(handleFormSubmit)}
+            className="search-form__box"
+          >
+            <input
+              {...register(
+                "film",
+                {
+                  value: moviesSearchText,
+                  required: "Нужно ввести ключевое слово",
+                }
+                // { value: moviesSearchText }
+              )}
+              className="search-form__input"
+              type="text"
+              placeholder="Фильм"
+            ></input>
+            <button type="submit" className="search-form__btn">
+              Найти
+            </button>
+          </form>
+
+          <div className="search-form__box-error">
+            {errors?.film && (
+              <p className="search-form__general-text">
+                {errors?.film?.message || "error!"}
+              </p>
+            )}
+          </div>
+
+          <div className="search-form__box-btn">
+            <label className="label-checkbox">
+              Короткометражки
+              <input
+                {...register("checkbox", { value: res })}
+                type="checkbox"
+                onClick={handleCheckbox}
+              />
+              <span className={`visible-checkbox ${isActive}`}></span>
+            </label>
+          </div>
+          <div className="search-form__line"></div>
+        </div>
+      </section>
+    </>
+  );
 }
 
 export default SearchForm;

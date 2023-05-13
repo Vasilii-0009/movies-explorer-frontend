@@ -3,11 +3,11 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import Acaunt from "../Acaunt/Acaunt";
 import NavigationPopupContext from "../../context/NavigationPopupContext";
-import HidenNavigation from "../../context/HidenNavigation";
+import HidenNavigationContext from "../../context/HidenNavigationContext";
 
 function Navigation(props) {
   const navigationContext = React.useContext(NavigationPopupContext);
-  const hidenNavigatin = React.useContext(HidenNavigation);
+  const hidenNavigatin = React.useContext(HidenNavigationContext);
   return (
     <div className={` navigation  ${navigationContext} `}>
       <div className="navigation__container">

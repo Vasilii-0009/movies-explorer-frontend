@@ -1,0 +1,34 @@
+.header__movies-box-film {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.header__movies-film {
+  margin-right: 16px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s linear;
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+  padding-bottom: 8px;
+}
+
+.header__movies-save-film {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s linear;
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+  padding-bottom: 6px;
+}
+
+.header__movies-film-active {
+  transition: all 0.3s linear;
+  border-bottom-color: rgba(255, 255, 255, 1);
+}

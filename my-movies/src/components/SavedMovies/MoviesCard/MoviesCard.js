@@ -3,6 +3,7 @@ import MoviesGenralCard from "../../MoviesGeneral/MoviesGeneralCard/MoviesGenral
 import "./MoviesCard.css";
 
 function SaveMoviesCard(props) {
+  console.log(props.cardInfo)
   function handleDeleteMovies() {
     props.handelDeleteMovies(props.cardInfo);
   }

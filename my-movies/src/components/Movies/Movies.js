@@ -1,23 +1,24 @@
+import "./Movies.css";
 import React from "react";
 import { useState, useEffect } from "react";
 import { DataMoviesApi } from "../../utils/MoviesApi";
 import { DataAuthApi } from "../../utils/MainApi";
 import SearchForm from "./SearchForm/SearchForm";
-import BtnMore from "./BtnMore/BtnMore";
-import MoviesCard from "./MoviesCard/MoviesCard";
 import MoviesCardsList from "./MoviesCardList/MoviesCardList";
 import Preloader from "./Preloader/Preloader";
 
 function Movies() {
   const [isArrayMovies, setArrayMovies] = useState([]);
-  const [isPreloader, setPreloader] = useState(false);
-  const [isConditonSectionBtn, setConditionSection] = useState(false);
-  // Поиск фильмов
   const [isSavedMovies, setSavedMovies] = useState([]);
-  const [isLike, setLike] = useState(false);
+  const [isPreloader, setPreloader] = useState(false);
+  const [isConditonSectionBtn, setConditionSectionBtn] = useState(false);
+  const [isShowFilms, setShowFilms] = useState(false);
+  const [isErrorMessage, setErrorMessage] = useState("");
+
   //Поиск фильмов
   function searchMovies() {
     setPreloader(true);
+
     DataMoviesApi.searhcMovies()
       .then((data) => {
         if (data) {
@@ -26,7 +27,6 @@ function Movies() {
           data.forEach((movie, index) => {
             newArrayFilms[index] = movie;
 
-            // newArrayFilms[index]._id = null;
             newArrayFilms[index].movieId = movie.id;
             newArrayFilms[index]._id = null;
 
@@ -43,33 +43,48 @@ function Movies() {
           });
 
           setArrayMovies(newArrayFilms);
-
           setPreloader(false);
-          //  setErrorMessage("");
-          setConditionSection(true);
+          setConditionSectionBtn(true);
         }
       })
       .catch((err) => {
         console.log(
           `${err} - "«Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз»"`
         );
-        setPreloader(false);
         setArrayMovies([]);
-        // return setErrorMessage(
-        //   "«Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз»"
-        // );
+        setPreloader(false);
+        setConditionSectionBtn(false);
+        return setErrorMessage(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+        );
       });
   }
+  // получаем сохраненные фильмы
+  useEffect(() => {
+    DataAuthApi.getCardMovies()
+      .then((data) => {
+        setSavedMovies(data);
+        setShowFilms(true);
+      })
+      .catch((err) => {
+        console.log(
+          err,
+          "ошибка  в первом юзэфекте, потому что нет сохраненных фотографий"
+        );
+      });
+  }, []);
 
   useEffect(() => {
     const messageSearch = localStorage.getItem("messageSearch");
-    if (messageSearch) {
+    if (messageSearch && isShowFilms) {
       searchMovies();
     }
-  }, [isLike]);
-  //создаем картчку фильма, которая будет добавлена  в сохраненые фильмы
-  function handelCreatCardMovies(data) {
-    setLike(true);
+  }, [isShowFilms]);
+
+  //создаем карточку фильма, которая будет добавлена  в сохраненые фильмы
+  function handelCreatCardMovies(data, event) {
+    const likeBtn = event.target;
+
     const country = data.country;
     const director = data.director;
     const duration = data.duration;
@@ -81,7 +96,20 @@ function Movies() {
     const movieId = data.id;
     const nameRU = data.nameRU;
     const nameEN = data.nameEN;
-    if (data._id === null) {
+    if (event.target.classList.contains("card__btn-like-active")) {
+      console.log("удаляем карточку");
+
+      likeBtn.classList.remove("card__btn-like-active");
+      DataAuthApi.deleteMovies(data._id)
+        .then((dataDelete) => {
+          data._id = null;
+        })
+        .catch((err) => {
+          console.log(`Карточка не удалена (код ошибки): ${err}`);
+        });
+    } else {
+      console.log("сохраняем карточку");
+      likeBtn.classList.add("card__btn-like-active");
       DataAuthApi.creatCardMovies(
         country,
         director,
@@ -96,52 +124,36 @@ function Movies() {
         nameEN
       )
         .then((dataSave) => {
-          console.log(dataSave);
+          data._id = dataSave.movies._id;
 
-          const res = isArrayMovies.filter((item) => {
-            const resArray = item.movieId === dataSave.movies.movieId;
-            return resArray;
-          });
-          res.map((item) => {
-            item._id = dataSave.movies._id;
-          });
-          console.log(isArrayMovies);
         })
         .catch((err) => {
           console.log(`Карточка не сохранена  (код ошибки): ${err}`);
         });
-    } else {
-      DataAuthApi.deleteMovies(data._id)
-        .then((dataDelete) => {
-          console.log(dataDelete);
-          data._id = null;
-        })
-        .catch((err) => {
-          console.log(`Карточка не удалена (код ошибки): ${err}`);
-        });
     }
   }
 
-  //получаем карточки фильмов и добавлемя в сохраненые фильмы
-  function handelSaveCardMovies() {
-    DataAuthApi.getCardMovies().then((data) => {
-      setSavedMovies(data);
-      setLike(false);
-    });
-  }
-  useEffect(() => {
-    handelSaveCardMovies();
-  }, []);
-
   return (
     <>
-      <SearchForm searchMovies={searchMovies} />
-      <MoviesCardsList
-        isArrayMovies={isArrayMovies}
-        isPreloader={isPreloader}
-        isConditonSectionBtn={isConditonSectionBtn}
-        handelCreatCardMovies={handelCreatCardMovies}
-      />
+      <section className="movies-box">
+        <SearchForm searchMovies={searchMovies} />
+        {isPreloader ? (
+          <section className="preloader">
+            <div className="container">
+              <Preloader />
+            </div>
+          </section>
+        ) : (
+          <MoviesCardsList
+            isArrayMovies={isArrayMovies}
+            isPreloader={isPreloader}
+            isConditonSectionBtn={isConditonSectionBtn}
+            isErrorMessage={isErrorMessage}
+            searchMovies={searchMovies}
+            handelCreatCardMovies={handelCreatCardMovies}
+          />
+        )}
+      </section>
     </>
   );
 }

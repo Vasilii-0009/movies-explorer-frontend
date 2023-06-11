@@ -1,6 +1,6 @@
 const configAuthApi = {
-  //url: "http://localhost:3000",
-  url: "https://api.my-movies.nomoredomains.monster",
+  // url: "http://localhost:3000",
+   url: "https://api.my-movies.nomoredomains.monster",
   headers: {
     "Content-Type": "application/json",
   },
@@ -110,7 +110,7 @@ class ApiAuth {
     });
     return this._checkResponse(creatCardMovies);
   }
-  // получаем карточки фильмов и добавлемя с сохраненые фильмы
+  // получаем карточки фильмов и добавлемя в сохраненые фильмы
   getCardMovies() {
     const token = localStorage.getItem("token");
     const getCardMovies = fetch(`${this.url}/movies`, {

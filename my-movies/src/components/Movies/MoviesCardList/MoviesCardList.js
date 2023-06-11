@@ -3,28 +3,27 @@ import React, { useEffect, useState } from "react";
 import MoviesGeneralLIstCards from "../../MoviesGeneral/MoviesGeneralLIstCards/MoviesGeneralLIstCards";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import BtnMore from "../BtnMore/BtnMore";
-import Cards from "../../../utils/cards";
-import { DataMoviesApi } from "../../../utils/MoviesApi";
-import { DataAuthApi } from "../../../utils/MainApi.js";
 
 function MoviesCardsList(props) {
-  // const Films = React.useContext(FilmsContext);
+  const [isFilms, setFilms] = useState([]);
+  const [isConditonBtn, setConditionBtn] = useState(false);
+  // error
+  const [isErrorCardMovies, setErrorCardMovies] = useState(false);
+  const [isMessageErrorCardMovies, setMessageErrorCardMovies] =
+    useState("Ничего не найдено");
 
-  // //checkbox
-  // const [isStatusCheckbox, setStatusCheckbox] = useState(null);
-  // //checkbox
-  // //
+  //cont
+  const [isCont, setCont] = useState(12);
+  const [isTabletCont, seTablettCont] = useState(8);
+  const [isMobilCont, setMobilCont] = useState(5);
+
+  //localStorage
   const statusInput = localStorage.getItem("messageSearch");
   const statusCkeckbox = localStorage.getItem("stateCheckbox");
-  const JsonStatusCkeckbox = JSON.parse(statusCkeckbox);
+  const jsonStatusCkeckbox = JSON.parse(statusCkeckbox);
+  console.log(jsonStatusCkeckbox)
 
-  const classBlockMore = "bloke-more-hiden";
-  //btn-more
-  const [isConditonBtn, setConditionBtn] = useState(false);
-
-  // // let res = Films.slice(0, isCont);
-  // //
-
+  //filterInput
   const getFilterMovies = () => {
     return props.isArrayMovies.filter((item) => {
       return item.nameRU.toLowerCase().includes(statusInput.toLowerCase());
@@ -33,93 +32,20 @@ function MoviesCardsList(props) {
 
   const filterMovies = getFilterMovies();
 
-  // //checkbox
-  // const getFilmCheckbox = () => {
-  //   return filterMovies.filter((item) => {
-  //     return item.duration <= 40;
-  //   });
-  // };
-  // const filterMoviesCheckbox = getFilmCheckbox();
+  //filtereCheckbox
+  const getFilterCheckbox = () => {
+    console.log('jsonStatusCkeckbox',jsonStatusCkeckbox)
+    return filterMovies.filter((item) => {
+      return item.duration <= 40;
+    });
+  };
+  const filterMoviesCheckbox = getFilterCheckbox();
 
-  // // checkbox
-  const [isCont, setCont] = useState(12);
-
-  let resMovies = JsonStatusCkeckbox
+  const generalFilterCont = jsonStatusCkeckbox
     ? filterMoviesCheckbox
-    : filterMovies.slice(0, isCont);
+    : filterMovies;
 
-  const [isFilms, setFilms] = useState(resMovies);
-
-  // //
-
-  // // const [isFilms, setFilms] = useState(res);
-
-  useEffect(() => {
-    // setStatusCheckbox(JsonStatusCkeckbox);
-    setFilms(resMovies);
-  }, [props.isArrayMovies]);
-
-  useEffect(() => {
-    if (filterMovies.length <= isFilms.length) {
-      return setConditionBtn(true);
-    } else {
-      return setConditionBtn(false);
-    }
-  }, [isFilms]);
-
-  function handleShowCardFilmsBtn() {
-    setCont(isCont + 3);
-    const finFilms = filterMovies.slice(0, isCont + 3);
-
-    setFilms(finFilms);
-    // if (filterMovies.length === finFilms.length) {
-    //   setConditionBtn(true);
-    // }
-  }
-
-  // // Tablet
-  // const [isTabletCont, seTablettCont] = useState(8);
-
-  // let resTablet = Films.slice(0, isTabletCont);
-
-  // const [isTabletFilms, setTabletFilms] = useState(resTablet);
-
-  // useEffect(() => {
-  //   setTabletFilms(resTablet);
-  // }, [Films]);
-
-  // function handleShowCardFilmsTablet() {
-  //   seTablettCont(isTabletCont + 2);
-
-  //   const finFilmsTablet = Films.slice(0, isTabletCont + 2);
-  //   setTabletFilms(finFilmsTablet);
-
-  //   if (Films.length <= resTablet.length) {
-  //     setConditionBtn(true);
-  //   }
-  // }
-
-  // //Mobile
-  // const [isMobilCont, setMobilCont] = useState(5);
-
-  // let resMobil = Films.slice(0, isMobilCont);
-
-  // const [isMobilFilms, setMobilFilms] = useState(resMobil);
-
-  // useEffect(() => {
-  //   setMobilFilms(resMobil);
-  // }, [Films]);
-
-  // function handleShowCardFilMobil() {
-  //   setMobilCont(isMobilCont + 2);
-
-  //   const finFilmsMobil = Films.slice(0, isMobilCont + 2);
-  //   setMobilFilms(finFilmsMobil);
-
-  //   if (Films.length <= resTablet.length) {
-  //     setConditionBtn(true);
-  //   }
-  // }
+  const resMovies = jsonStatusCkeckbox ? filterMoviesCheckbox : filterMovies;
 
   // resize
 
@@ -137,80 +63,79 @@ function MoviesCardsList(props) {
     };
   }, []);
 
-  if (width > breakpoint) {
-    return (
-      <>
-        <MoviesGeneralLIstCards
-          isPreloader={props.isPreloader}
-          // isErrorMessage={props.isErrorMessage}
-        >
-          {isFilms.map((card, index) => {
-            return (
-              <MoviesCard
-                handelCreatCardMovies={props.handelCreatCardMovies}
-                // isLike={props.isLike}
-                // isSavedMovies={props.isSavedMovies}
-                // cardsContext={props.cardsContext}
-                // handelCardMovies={props.handelCardMovies}
-                cardInfo={card}
-                key={index}
-              />
-            );
-          })}
-        </MoviesGeneralLIstCards>
-        <BtnMore
-          isConditonSectionBtn={props.isConditonSectionBtn}
-          isConditonBtn={isConditonBtn}
-          classBlockMore={classBlockMore}
-          handleShowCardFilms={handleShowCardFilmsBtn}
-        />
-      </>
-    );
+  // в зависимости от ширина экрана отобрашается разное количество карточек
+  useEffect(() => {
+    if (resMovies.length <= 0 && props.isConditonSectionBtn) {
+      setErrorCardMovies(true);
+    }
+    if (width > breakpoint) {
+      setFilms(resMovies.slice(0, isCont));
+    }
+    if (width <= breakpoint && width >= breakpointMobil) {
+      setFilms(resMovies.slice(0, isTabletCont));
+    }
+    if (width <= breakpointMobil) {
+      setFilms(resMovies.slice(0, isMobilCont));
+    }
+  }, [width]);
+
+  // добавялем карточки по клику
+  function handleShowCardFilmsBtn() {
+    if (width > breakpoint) {
+      setCont((prev) => prev + 3);
+      const finFilms = generalFilterCont.slice(0, isCont + 3);
+
+      setFilms(finFilms);
+    }
+
+    if (width <= breakpoint && width >= breakpointMobil) {
+      seTablettCont(isTabletCont + 2);
+      const finFilms = generalFilterCont.slice(0, isTabletCont + 2);
+
+      setFilms(finFilms);
+    }
+    if (width <= breakpointMobil) {
+      setMobilCont(isTabletCont + 2);
+      const finFilms = generalFilterCont.slice(0, isMobilCont + 2);
+
+      setFilms(finFilms);
+    }
   }
-  // if (width <= breakpoint && width >= breakpointMobil) {
-  //   return (
-  //     <>
-  //       <MoviesGeneralLIstCards
-  //         isConditonSection={props.isConditonSection}
-  //         isPreloader={props.isPreloader}
-  //         isErrorMessage={props.isErrorMessage}
-  //       >
-  //         {isTabletFilms.map((card, index) => {
-  //           return <MoviesCard cardInfo={card} key={index} />;
-  //         })}
-  //       </MoviesGeneralLIstCards>
 
-  //       <BtnMore
-  //         isConditonSection={props.isConditonSection}
-  //         isConditonBtn={isConditonBtn}
-  //         classBlockMore={classBlockMore}
-  //         handleShowCardFilms={handleShowCardFilmsTablet}
-  //       />
-  //     </>
-  //   );
-  // }
+  // удаляем копнку ЕЩЁ если на страницы и в массиве одниковое количество карточек
+  useEffect(() => {
+    if (isFilms.length >= resMovies.length) {
+      return setConditionBtn(true);
+    } else {
+      return setConditionBtn(false);
+    }
+  }, [isFilms]);
 
-  // if (width <= breakpointMobil) {
-  //   return (
-  //     <>
-  //       <MoviesGeneralLIstCards
-  //         isPreloader={props.isPreloader}
-  //         isErrorMessage={props.isErrorMessage}
-  //       >
-  //         {isMobilFilms.map((card, index) => {
-  //           return <MoviesCard cardInfo={card} key={index} />;
-  //         })}
-  //       </MoviesGeneralLIstCards>
-
-  //       <BtnMore
-  //         isConditonSection={props.isConditonSection}
-  //         isConditonBtn={isConditonBtn}
-  //         classBlockMore={classBlockMore}
-  //         handleShowCardFilms={handleShowCardFilMobil}
-  //       />
-  //     </>
-  //   );
-  // }
+  return (
+    <>
+      <MoviesGeneralLIstCards
+        isPreloader={props.isPreloader}
+        isErrorCardMovies={isErrorCardMovies}
+        isMessageErrorCardMovies={isMessageErrorCardMovies}
+        isErrorMessage={props.isErrorMessage}
+      >
+        {isFilms.map((card, index) => {
+          return (
+            <MoviesCard
+              handelCreatCardMovies={props.handelCreatCardMovies}
+              cardInfo={card}
+              key={index}
+            />
+          );
+        })}
+      </MoviesGeneralLIstCards>
+      <BtnMore
+        isConditonSectionBtn={props.isConditonSectionBtn}
+        isConditonBtn={isConditonBtn}
+        handleShowCardFilms={handleShowCardFilmsBtn}
+      />
+    </>
+  );
 }
 
 export default MoviesCardsList;

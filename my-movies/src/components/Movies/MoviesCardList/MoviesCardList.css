@@ -45,3 +45,9 @@
   transition: all 0.3s linear;
   opacity: 0.7;
 } */
+
+.error-message {
+  background-color: #202020;
+  text-align: center;
+  color: #ee3465;
+}

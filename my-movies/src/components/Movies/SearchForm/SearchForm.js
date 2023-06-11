@@ -6,16 +6,16 @@ function SearchForm(props) {
   const moviesSearchText = localStorage.getItem("messageSearch");
   const searchScheckBox = localStorage.getItem("stateCheckbox");
   const res = JSON.parse(searchScheckBox);
-  // const [isMoviesSearchText, setMoviesSearchText] = useState(null);
   const [isActive, setActive] = useState("");
 
+  //checkbox
   useEffect(() => {
     if (res === true) {
       setActive("visible-checkbox_active");
-    } else {
-    }
+    } 
   }, []);
 
+//react hook form
   const {
     register,
     formState: { errors },
@@ -32,21 +32,16 @@ function SearchForm(props) {
 
   function handleCheckbox() {
     if (moviesSearchText !== null) {
-      console.log("moviesSearchText moviesSearchText", moviesSearchText);
       props.searchMovies();
     }
   }
-
-  // if (isMoviesSearchText !== null) {
-  //   console.log("truetrue truetrue truetrue ");
-  //   props.searchMovies();
-  // }
+// изменяем значение чекбокса и передвегаем ползунок
   const watchCheckbox = watch((value) => {
-    // setActiveClick(true);
+    console.log(value)
     localStorage.setItem("stateCheckbox", value.checkbox);
-
     if (value.checkbox === true) {
       setActive("visible-checkbox_active");
+
     } else {
       setActive(" ");
     }

@@ -4,14 +4,16 @@ import MoviesGenralCard from "../../MoviesGeneral/MoviesGeneralCard/MoviesGenral
 import "./MoviesCard.css";
 
 function MoviesCard(props) {
+  // console.log("props.cardInfo", props.cardInfo._id);
   const isLiked = props.cardInfo._id !== null;
-  console.log("isLiked");
+
   const classBtnLike = `card__btn-like ${isLiked && "card__btn-like-active"}`;
 
-  function handelSubmitCreatCardMovirs() {
-    props.handelCreatCardMovies(props.cardInfo);
-    props.handelSaveCardMovies;
+  function handelSubmitCreatCardMovirs(event) {
+    props.handelCreatCardMovies(props.cardInfo, event);
+    // props.handelSaveCardMovies();
   }
+
   return (
     <>
       <div className={`card`}>

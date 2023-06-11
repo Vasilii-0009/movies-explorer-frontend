@@ -5,7 +5,6 @@ import MoviesCardList from './MoviesCardList/MoviesCardList'
 import SearchFormSaved from "./SearchFormSaved/SearchFromSaved";
 
 const  saveMovies =  (textSearch, arrMovies) =>  {
-  console.log('сначала получучаю текс а затем эту функцию')
  if(!textSearch) {
    return arrMovies
  }

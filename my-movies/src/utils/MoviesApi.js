@@ -1,6 +1,6 @@
 const configMoviesApi = {
   // url: "http://localhost:3000",
-  url: "https://api.nomoreparties.co/beatfilm-movies",
+  url: "http://api.nomoreparties.co/beatfilm-movies",
   headers: {
     "Content-Type": "application/json",
   },

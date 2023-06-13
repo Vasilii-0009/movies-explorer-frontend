@@ -1,6 +1,6 @@
 const configAuthApi = {
   // url: "http://localhost:3000",
-   url: "http://api.my-movies.nomoredomains.monster",
+   url: "https://api.my-movies.nomoredomains.monster",
   headers: {
     "Content-Type": "application/json",
   },

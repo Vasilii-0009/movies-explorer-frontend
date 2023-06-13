@@ -12,7 +12,6 @@ function Movies() {
   const [isSavedMovies, setSavedMovies] = useState([]);
   const [isPreloader, setPreloader] = useState(false);
   const [isConditonSectionBtn, setConditionSectionBtn] = useState(false);
-  const [isShowFilms, setShowFilms] = useState(false);
   const [isErrorMessage, setErrorMessage] = useState("");
 
   //Поиск фильмов
@@ -60,11 +59,11 @@ function Movies() {
       });
   }
   // получаем сохраненные фильмы
-  useEffect(() => {
-    DataAuthApi.getCardMovies()
+  useEffect(() => { 
+    if(isSavedMovies.length > 0) {
+      DataAuthApi.getCardMovies()
       .then((data) => {
         setSavedMovies(data);
-        setShowFilms(true);
       })
       .catch((err) => {
         console.log(
@@ -72,14 +71,18 @@ function Movies() {
           "ошибка  в первом юзэфекте, потому что нет сохраненных фотографий"
         );
       });
-  }, []);
+    }
+   
+    }
+
+  , []);
 
   useEffect(() => {
     const messageSearch = localStorage.getItem("messageSearch");
-    if (messageSearch && isShowFilms) {
+    if (messageSearch) {
       searchMovies();
     }
-  }, [isShowFilms]);
+  }, []);
 
   //создаем карточку фильма, которая будет добавлена  в сохраненые фильмы
   function handelCreatCardMovies(data, event) {

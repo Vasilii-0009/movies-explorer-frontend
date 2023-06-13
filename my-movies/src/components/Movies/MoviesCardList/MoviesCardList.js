@@ -21,7 +21,7 @@ function MoviesCardsList(props) {
   const statusInput = localStorage.getItem("messageSearch");
   const statusCkeckbox = localStorage.getItem("stateCheckbox");
   const jsonStatusCkeckbox = JSON.parse(statusCkeckbox);
-  console.log(jsonStatusCkeckbox)
+
 
   //filterInput
   const getFilterMovies = () => {
@@ -34,7 +34,6 @@ function MoviesCardsList(props) {
 
   //filtereCheckbox
   const getFilterCheckbox = () => {
-    console.log('jsonStatusCkeckbox',jsonStatusCkeckbox)
     return filterMovies.filter((item) => {
       return item.duration <= 40;
     });

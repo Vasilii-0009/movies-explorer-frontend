@@ -18,6 +18,8 @@ import NavigationPopupContext from "../../context/NavigationPopupContext";
 import HidenNavigationContext from "../../context/HidenNavigationContext";
 import CurrentUserContext from "../../context/CurrentUserContext";
 
+
+
 function App() {
   //app
   const [loggedIn, setLoggidIn] = useState(false);
@@ -60,7 +62,6 @@ function App() {
     const password = data.data.password;
     DataAuthApi.registerUser(name, email, password)
       .then((data) => {
-        console.log(data);
         setLoggidIn(true);
         navigaMovies("/movies", { replace: true });
         setCurrentUser(data);
@@ -101,8 +102,6 @@ function App() {
         } else {
           setLoggidIn(true);
           navigaMovies("/movies", { replace: true });
-          // setCard([]);
-          // setConditionSection(false);
           setErrorMessage("");
         }
       })

@@ -37,7 +37,6 @@ function SearchForm(props) {
   }
 // изменяем значение чекбокса и передвегаем ползунок
   const watchCheckbox = watch((value) => {
-    console.log(value)
     localStorage.setItem("stateCheckbox", value.checkbox);
     if (value.checkbox === true) {
       setActive("visible-checkbox_active");

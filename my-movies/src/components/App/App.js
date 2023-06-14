@@ -144,10 +144,7 @@ function App() {
   }
   //выход пользовтеля с сайта
   function signOut() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("messageSearch");
-    localStorage.removeItem("stateCheckbox");
-    localStorage.removeItem("arrayMovies");
+    localStorage.clear();
     navigateLogiIn("/signin", { replace: true });
     setLoggidIn(false);
   }

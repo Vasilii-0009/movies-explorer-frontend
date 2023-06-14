@@ -1,6 +1,5 @@
 import "./Profile.css";
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import CurrentUserContext from "../../context/CurrentUserContext";
 
@@ -8,12 +7,18 @@ function Profile(props) {
   const currentUser = React.useContext(CurrentUserContext);
   const name = currentUser.name;
   const email = currentUser.email;
-
   const btnDisabel = "profile__btn_save_active";
+
+  const [isNameContext, setNameContex] = useState(name)
+  const [isEmailContext, setEmailContex] = useState(email)
+  const [isStateInput, setStateName] = useState(false)
+  const [isStaticInput, setStaticInput] = useState(true)
+  const [isStateBtn, setStateBtn] = useState(false)
+  const [isBtnActivSave, setBtnActiveSave] = useState(false)
+  const [isMainState, setMainState] = useState(false)
   const [isDisabled, setDisabled] = useState(true);
   const [isMessageHiden, setMessageHiden] = useState(false);
-  const [isBtnStateEmail, setBtnStateEmail] = useState(false);
-  const [isMessageEmail, setMessageEmail] = useState("");
+  const [isMessageError, setMessageError] = useState("");
 
   const {
     register,
@@ -22,31 +27,52 @@ function Profile(props) {
     watch,
     reset,
   } = useForm({
-    mode: "onChange",
+    mode: "onSubmit",
   });
 
   function handleFormSubmit(data) {
-    props.handleUpdateUser(data);
-    reset();
+    if (isMainState) {
+      props.handleUpdateUser(data);
+      setMessageHiden(true);
+      setStateBtn(false)
+      setDisabled(true)
+      setStateName(false)
+      setStaticInput(true)
+      setMessageError('')
+      reset();
+    } else {
+      console.log('false')
+      setMessageError("Для сохранения данных измените (email и name)");
+    }
   }
+
 
   function renameState() {
     setDisabled(false);
-    setMessageHiden(true);
+    setMessageHiden(false);
+    setStateBtn(true)
+    setStateName(true)
+    setStaticInput(false)
+    setBtnActiveSave(false)
+    setMainState(false)
   }
 
   useEffect(() => {
     const subscription = watch((value) => {
-      if (value.email === email) {
-        setBtnStateEmail(true);
-        setMessageEmail("Введите новый email");
-      } else {
-        setBtnStateEmail(false);
+      if (value.name === isNameContext || value.email === isEmailContext || value.name === '' || value.email === '') {
+        setMessageError("Для сохранения данных измените (email и name)");
+        setBtnActiveSave(false)
+        setMainState(false)
+      }
+      else if (value.name !== isNameContext && value.email !== isEmailContext && value.name !== '' || value.email !== '') {
+        setMessageError("");
+        setBtnActiveSave(true)
+        setMainState(true)
       }
     });
 
     return () => subscription;
-  }, [watch, handleFormSubmit]);
+  }, []);
 
   return (
     <>
@@ -61,7 +87,7 @@ function Profile(props) {
               <div className="profile__box-input ">
                 <input
                   {...register("name", {
-                    required: "Поле (Имя) объязательно нужно заполнить",
+                    // required: "Поле (Имя) объязательно нужно заполнить",
                     pattern: {
                       value: /^[a-zA-Zа-яёА-ЯЁ -]+$/,
                       message:
@@ -69,6 +95,7 @@ function Profile(props) {
                     },
                     onChange: (e) => {
                       setMessageHiden(false);
+                      setNameContex(e.target.value)
                     },
 
                     minLength: {
@@ -83,14 +110,15 @@ function Profile(props) {
                     },
                   })}
                   type="string"
-                  className={`profile__input profile__input_name ${
-                    isDisabled && "profile__input-disabled"
-                  }`}
+                  className={`profile__input profile__input_name 
+                   ${isDisabled && "profile__input-disabled"}`}
                   placeholder="Имя"
-                ></input>
+                  value={isStateInput && isNameContext || ''}
+                />
 
-                <div className="profile__name profile-general">{name}</div>
+                <div className="profile__name profile-general">{isStaticInput && name}</div>
               </div>
+
               <div className="profile__error-box">
                 {errors?.name && (
                   <p className="profile__general-text">
@@ -98,10 +126,11 @@ function Profile(props) {
                   </p>
                 )}
               </div>
+
               <div className="profile__box-input profile__box-input_line">
                 <input
                   {...register("email", {
-                    required: "Поле (E-mail) объязательно нужно заполнить",
+                    // required: "Поле (E-mail) объязательно нужно заполнить",
                     pattern: {
                       value:
                         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -109,17 +138,18 @@ function Profile(props) {
                     },
                     onChange: (e) => {
                       setMessageHiden(false);
+                      setEmailContex(e.target.value)
                     },
                   })}
                   type="email"
-                  className={`profile__input profile__input_email ${
-                    isDisabled && "profile__input-disabled"
-                  }`}
+                  className={`profile__input profile__input_email ${isDisabled && "profile__input-disabled"}`}
                   placeholder="E-mail"
+                  value={isStateInput && isEmailContext || ""}
                 />
 
-                <div className="profile__email profile-general">{email}</div>
+                <div className="profile__email profile-general">{isStaticInput && email || ''}</div>
               </div>
+
               <div className="profile__error-box">
                 {errors?.email && (
                   <p className="profile__general-text">
@@ -129,35 +159,20 @@ function Profile(props) {
               </div>
 
               <div className="profile__box-btn">
-                <div
-                  className={`profile__error 
-                ${isBtnStateEmail && "profile__error_red"}`}
-                >
-                  {isBtnStateEmail && isMessageEmail}
-                  {isMessageHiden && props.isErrorMessage}
-                </div>
+                <div className={`profile__error`}> {isMessageHiden && props.isErrorMessage} </div>
 
-                <button
-                  onClick={renameState}
-                  type="submit"
-                  disabled={isDisabled ? "" : !isValid}
-                  className={`profile__btn ${
-                    isDisabled ? "" : "profile__btn_save"
-                  } ${isValid && btnDisabel} ${
-                    isBtnStateEmail ? "profile__btn_disbled" : ""
-                  } `}
-                >
-                  {isDisabled ? "Редактировать" : "Сохраннить"}
-                </button>
+                {!isStateBtn && <>
+                  <button onClick={renameState} type="button" className={`profile__btn`}> Редактировать </button>
+                  <button onClick={props.signOut} type="button" className={`profile__link`}> Выйти из аккаунта </button>
+                </>}
+
+                {isStateBtn && <>
+                  <div className={`profile__error ${"profile__error_red"}`}> {isMessageError} </div>
+                  <button className={`profile__btn profile__btn_save  ${isBtnActivSave && btnDisabel}`} type="submit">Сохраннить</button>
+                </>}
+
               </div>
             </form>
-            <button
-              onClick={props.signOut}
-              type="button"
-              className={` profile__link `}
-            >
-              {`${isDisabled ? "Выйти из аккаунта" : ""}`}
-            </button>
           </div>
         </div>
       </section>

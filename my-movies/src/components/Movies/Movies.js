@@ -8,11 +8,17 @@ import MoviesCardsList from "./MoviesCardList/MoviesCardList";
 import Preloader from "./Preloader/Preloader";
 
 function Movies() {
+  const FilmsFromLocalStorage = JSON.parse(localStorage.getItem("FilmsFromLocalStorage"))
   const [isArrayMovies, setArrayMovies] = useState([]);
   const [isSavedMovies, setSavedMovies] = useState([]);
+  const [isErrorMessage, setErrorMessage] = useState("");
+  const [isMessageErrorCardMovies, setMessageErrorCardMovies] = useState("Ничего не найдено");
   const [isPreloader, setPreloader] = useState(false);
   const [isConditonSectionBtn, setConditionSectionBtn] = useState(false);
-  const [isErrorMessage, setErrorMessage] = useState("");
+  const [isGetMoviesLocalStorag, setGetMoviesLocalStorag] = useState(false)
+  const [isStateForCheckLike, setStateForCheckLike] = useState(false)
+  const [isStateForSaveMovies, setStateForSaveMovies] = useState(false)
+
 
   //Поиск фильмов
   function searchMovies() {
@@ -29,21 +35,13 @@ function Movies() {
             newArrayFilms[index].movieId = movie.id;
             newArrayFilms[index]._id = null;
 
-            isSavedMovies.length > 0
-              ? isSavedMovies.forEach((savedMovie) => {
-                  // сравниваем movieId
-
-                  if (savedMovie.movieId === newArrayFilms[index].movieId) {
-                    // если одинаковые, то устанавливаем _id
-                    newArrayFilms[index]._id = savedMovie._id;
-                  }
-                })
-              : (newArrayFilms[index]._id = null);
           });
-
+          localStorage.setItem('FilmsFromLocalStorage', JSON.stringify(newArrayFilms))
           setArrayMovies(newArrayFilms);
           setPreloader(false);
           setConditionSectionBtn(true);
+          setStateForSaveMovies(true);
+          setErrorMessage('')
         }
       })
       .catch((err) => {
@@ -59,30 +57,78 @@ function Movies() {
       });
   }
   // получаем сохраненные фильмы
-  useEffect(() => { 
-    if(isSavedMovies.length > 0) {
-      DataAuthApi.getCardMovies()
-      .then((data) => {
-        setSavedMovies(data);
-      })
-      .catch((err) => {
-        console.log(
-          err,
-          "ошибка  в первом юзэфекте, потому что нет сохраненных фотографий"
-        );
-      });
-    }
-   
-    }
-
-  , []);
-
   useEffect(() => {
-    const messageSearch = localStorage.getItem("messageSearch");
-    if (messageSearch) {
-      searchMovies();
+    if (FilmsFromLocalStorage || isStateForSaveMovies) {
+      DataAuthApi.getCardMovies()
+        .then((data) => {
+          setSavedMovies(data);
+          setStateForCheckLike(true)
+          setStateForSaveMovies(false)
+        })
+        .catch((err) => {
+          console.log(
+            err,
+            "ошибка  в первом юзэфекте, потому что нет сохраненных фотографий"
+          );
+          setPreloader(false);
+          setStateForSaveMovies(false)
+          setArrayMovies([])
+          setMessageErrorCardMovies('')
+          return setErrorMessage(
+            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+          );
+        });
     }
-  }, []);
+  }, [isStateForSaveMovies]);
+
+
+  //test
+  //проверяем карточку с фильмом есть ли у неё id польвателя и добавляем ЛАЙК
+  function checkLike() {
+    setStateForCheckLike(false)
+    isSavedMovies.forEach((itemSava) => {
+      FilmsFromLocalStorage.forEach((item) => {
+        if (itemSava.movieId === item.movieId) {
+          item._id = itemSava._id
+        }
+      })
+    })
+  }
+  //test
+
+  //test
+  // получаем фильмы после перезагрузки страницы 
+  useEffect(() => {
+    if (FilmsFromLocalStorage && isStateForCheckLike) {
+      setPreloader(true);
+      console.log(isArrayMovies)
+      setArrayMovies(FilmsFromLocalStorage)
+      setGetMoviesLocalStorag(true)
+      checkLike()
+      setConditionSectionBtn(true)
+      if (isArrayMovies.length > 0) {
+        setPreloader(false);
+      }
+    }
+  }, [isGetMoviesLocalStorag, isStateForCheckLike, isConditonSectionBtn])
+  //test
+
+  //test
+  //получаем фильмы по клику на кнонку поиска 
+  function searchMoviesLocalStorag() {
+    console.log('получаем фильмы по клику на кнонку поиска ')
+    setPreloader(true);
+    setStateForSaveMovies(true);
+    return setErrorMessage('');
+  }
+  if (isStateForCheckLike && isStateForSaveMovies) {
+    setPreloader(false);
+    checkLike()
+    setArrayMovies(FilmsFromLocalStorage)
+
+  }
+  //tets
+
 
   //создаем карточку фильма, которая будет добавлена  в сохраненые фильмы
   function handelCreatCardMovies(data, event) {
@@ -128,6 +174,8 @@ function Movies() {
       )
         .then((dataSave) => {
           data._id = dataSave.movies._id;
+          console.log('добавили айди чтобы отображть лайк')
+          console.log('dataSave', dataSave)
 
         })
         .catch((err) => {
@@ -139,7 +187,11 @@ function Movies() {
   return (
     <>
       <section className="movies-box">
-        <SearchForm searchMovies={searchMovies} />
+        <SearchForm
+          searchMovies={searchMovies}
+          searchMoviesLocalStorag={searchMoviesLocalStorag}
+
+        />
         {isPreloader ? (
           <section className="preloader">
             <div className="container">
@@ -152,6 +204,7 @@ function Movies() {
             isPreloader={isPreloader}
             isConditonSectionBtn={isConditonSectionBtn}
             isErrorMessage={isErrorMessage}
+            isMessageErrorCardMovies={isMessageErrorCardMovies}
             searchMovies={searchMovies}
             handelCreatCardMovies={handelCreatCardMovies}
           />

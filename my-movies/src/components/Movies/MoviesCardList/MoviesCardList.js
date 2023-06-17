@@ -9,8 +9,8 @@ function MoviesCardsList(props) {
   const [isConditonBtn, setConditionBtn] = useState(false);
   // error
   const [isErrorCardMovies, setErrorCardMovies] = useState(false);
-  const [isMessageErrorCardMovies, setMessageErrorCardMovies] =
-    useState("Ничего не найдено");
+  // const [isMessageErrorCardMovies, setMessageErrorCardMovies] =
+  //   useState("Ничего не найдено");
 
   //cont
   const [isCont, setCont] = useState(12);
@@ -22,7 +22,6 @@ function MoviesCardsList(props) {
   const statusCkeckbox = localStorage.getItem("stateCheckbox");
   const jsonStatusCkeckbox = JSON.parse(statusCkeckbox);
 
-
   //filterInput
   const getFilterMovies = () => {
     return props.isArrayMovies.filter((item) => {
@@ -31,7 +30,6 @@ function MoviesCardsList(props) {
   };
 
   const filterMovies = getFilterMovies();
-
   //filtereCheckbox
   const getFilterCheckbox = () => {
     return filterMovies.filter((item) => {
@@ -76,7 +74,7 @@ function MoviesCardsList(props) {
     if (width <= breakpointMobil) {
       setFilms(resMovies.slice(0, isMobilCont));
     }
-  }, [width]);
+  }, [width, props.isArrayMovies]);
 
   // добавялем карточки по клику
   function handleShowCardFilmsBtn() {
@@ -115,7 +113,7 @@ function MoviesCardsList(props) {
       <MoviesGeneralLIstCards
         isPreloader={props.isPreloader}
         isErrorCardMovies={isErrorCardMovies}
-        isMessageErrorCardMovies={isMessageErrorCardMovies}
+        isMessageErrorCardMovies={props.isMessageErrorCardMovies}
         isErrorMessage={props.isErrorMessage}
       >
         {isFilms.map((card, index) => {

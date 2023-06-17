@@ -46,7 +46,6 @@ function Profile(props) {
     }
   }
 
-
   function renameState() {
     setDisabled(false);
     setMessageHiden(false);

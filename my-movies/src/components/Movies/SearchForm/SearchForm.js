@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 function SearchForm(props) {
   const moviesSearchText = localStorage.getItem("messageSearch");
   const searchScheckBox = localStorage.getItem("stateCheckbox");
+  const FilmsFromLocalStorage = JSON.parse(localStorage.getItem('FilmsFromLocalStorage'))
   const res = JSON.parse(searchScheckBox);
   const [isActive, setActive] = useState("");
 
@@ -12,10 +13,10 @@ function SearchForm(props) {
   useEffect(() => {
     if (res === true) {
       setActive("visible-checkbox_active");
-    } 
+    }
   }, []);
 
-//react hook form
+  //react hook form
   const {
     register,
     formState: { errors },
@@ -27,15 +28,24 @@ function SearchForm(props) {
 
   function handleFormSubmit(dataMeassage) {
     localStorage.setItem("messageSearch", dataMeassage.film);
-    props.searchMovies();
+    console.log('нажимаю на кнопку поиска')
+    if (FilmsFromLocalStorage === null) {
+      console.log('делаю запрос на сервер за фильмами')
+      props.searchMovies();
+    }
+
+    if (FilmsFromLocalStorage !== null) {
+      props.searchMoviesLocalStorag();
+    }
+
   }
 
   function handleCheckbox() {
     if (moviesSearchText !== null) {
-      props.searchMovies();
+      props.searchMoviesLocalStorag();
     }
   }
-// изменяем значение чекбокса и передвегаем ползунок
+  // изменяем значение чекбокса и передвегаем ползунок
   const watchCheckbox = watch((value) => {
     localStorage.setItem("stateCheckbox", value.checkbox);
     if (value.checkbox === true) {

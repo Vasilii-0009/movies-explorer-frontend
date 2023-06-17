@@ -3,9 +3,14 @@ import MoviesGenralCard from "../../MoviesGeneral/MoviesGeneralCard/MoviesGenral
 import "./MoviesCard.css";
 
 function SaveMoviesCard(props) {
-  console.log(props.cardInfo)
+
   function handleDeleteMovies() {
+    const btnLike = document.querySelector('.card__btn-like')
     props.handelDeleteMovies(props.cardInfo);
+    console.log(props.cardInfo)
+    props.cardInfo._id = null
+    console.log(btnLike)
+    // btnLike.classList.remove('card__btn-like-active')
   }
   return (
     <div className={`card`}>

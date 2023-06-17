@@ -5,7 +5,7 @@ import { DataMoviesApi } from "../../utils/MoviesApi";
 import { DataAuthApi } from "../../utils/MainApi";
 import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardsList from "./MoviesCardList/MoviesCardList";
-import Preloader from "./Preloader/Preloader";
+import Preloader from "../Preloader/Preloader";
 
 function Movies() {
   const FilmsFromLocalStorage = JSON.parse(localStorage.getItem("FilmsFromLocalStorage"))
@@ -101,11 +101,10 @@ function Movies() {
   useEffect(() => {
     if (FilmsFromLocalStorage && isStateForCheckLike) {
       setPreloader(true);
-      console.log(isArrayMovies)
-      setArrayMovies(FilmsFromLocalStorage)
-      setGetMoviesLocalStorag(true)
-      checkLike()
-      setConditionSectionBtn(true)
+      setArrayMovies(FilmsFromLocalStorage);
+      setGetMoviesLocalStorag(true);
+      checkLike();
+      setConditionSectionBtn(true);
       if (isArrayMovies.length > 0) {
         setPreloader(false);
       }

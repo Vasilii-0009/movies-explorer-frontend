@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { DataAuthApi } from "../../utils/MainApi.js";
 import ProtectedRoute from "../ProtectedRoute";
+import ProtectedRouteAuth from "../ProtectedRouteAuth"
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import Register from "../Register/Register";
@@ -37,6 +38,8 @@ function App() {
   // Burger
   const [isNavigatContext, setNavigate] = useState("");
   const [isBurger, setBurger] = useState("");
+  //localStorage
+  const tokenLocalStorage = localStorage.getItem('token')
 
   function ShowNavigition() {
     if (isNavigatContext === "navigation-show") {
@@ -133,10 +136,9 @@ function App() {
         })
         .catch(() => {
           console.log(
-            `${
-              jwt === null
-                ? "401 — Переданный токен некорректен "
-                : " 400 — Токен не передан или передан не в том формате"
+            `${jwt === null
+              ? "401 — Переданный токен некорректен "
+              : " 400 — Токен не передан или передан не в том формате"
             }`
           );
         });
@@ -145,7 +147,7 @@ function App() {
   //выход пользовтеля с сайта
   function signOut() {
     localStorage.clear();
-    navigateLogiIn("/signin", { replace: true });
+    navigateLogiIn("/", { replace: true });
     setLoggidIn(false);
   }
   //обновляем дынные пользователя
@@ -216,7 +218,7 @@ function App() {
                   path="/saved-movies"
                   element={
                     <>
-                    <SavedMovies/>
+                      <SavedMovies />
                       <Footer />
                       <Navigation />
                     </>
@@ -242,29 +244,42 @@ function App() {
                 />
               </Route>
 
+
+              <Route
+                path="/signin"
+
+                element={
+                  <ProtectedRouteAuth
+                    element={
+                      <Login
+                        handeleLogin={handeleLoginUser}
+                        isErrorMessage={isErrorMessage}
+                        isErrorStateLogin={isErrorStateLogin}
+                      />
+                    }
+                    tokenLocalStorage={tokenLocalStorage}
+                  />
+
+
+
+                }
+              />
+
               <Route
                 path="/signup"
                 element={
-                  <>
-                    <Register
-                      handeleRegisterUser={handeleRegisterUser}
-                      isErrorMessage={isErrorMessage}
-                      isErrorState={isErrorState}
-                    />
-                  </>
+                  <ProtectedRouteAuth
+                    element={
+                      <Register
+                        handeleRegisterUser={handeleRegisterUser}
+                        isErrorMessage={isErrorMessage}
+                        isErrorState={isErrorState}
+                      />
+                    }
+                    tokenLocalStorage={tokenLocalStorage}
+                  />
                 }
-              />
-              <Route
-                path="/signin"
-                element={
-                  <>
-                    <Login
-                      handeleLogin={handeleLoginUser}
-                      isErrorMessage={isErrorMessage}
-                      isErrorStateLogin={isErrorStateLogin}
-                    />
-                  </>
-                }
+
               />
               <Route path="*" element={<PageNotFound />} />
             </Routes>

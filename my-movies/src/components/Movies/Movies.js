@@ -104,11 +104,12 @@ function Movies() {
       checkLike();
       setConditionSectionBtn(true);
       setDisabled(false)
-      if (isArrayMovies.length > 0) {
-        setPreloader(false);
-      }
     }
-  }, [isGetMoviesLocalStorag, isStateForCheckLike, isConditonSectionBtn])
+    if (isArrayMovies.length > 0) {
+      return setPreloader(false);
+    }
+  }, [isGetMoviesLocalStorag, isStateForCheckLike, isConditonSectionBtn, isArrayMovies])
+
 
   //получаем фильмы по клику на кнонку поиска 
   function searchMoviesLocalStorag() {

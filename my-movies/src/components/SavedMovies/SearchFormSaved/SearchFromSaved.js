@@ -1,8 +1,10 @@
-import { React, useState } from "react";
+import './SearchFromSaved.css'
+import { React, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 function SearchFormSaved(props) {
   const [isActive, setActive] = useState("");
+  const [isStateCheckbox, setStateCheckbox] = useState(false)
 
   //react hook form
   const {
@@ -19,18 +21,22 @@ function SearchFormSaved(props) {
     props.handelMoviesFilter()
   }
   //функция чтобы отфильтровать массив с фильмами с помощью чекбокса
+  const watchCheckbox = watch((value) => {
+    setStateCheckbox(value.checkboxSave)
+    localStorage.setItem('stateCheckboxSave', value.checkboxSave)
+    if (value.checkboxSave === true) {
+      setActive("visible-checkbox_active");
+    } else {
+      setActive(" ");
+    }
+  });
   function handelCheckbox() {
-    const watchCheckbox = watch((value) => {
-      localStorage.setItem("stateCheckboxSave", value.checkboxSave);
-      if (value.checkboxSave === true) {
-        setActive("visible-checkbox_active");
-      } else {
-        setActive(" ");
-      }
-      props.handelMoviesFilterCheckbox()
-      props.startFilter()
-    });
+    props.handelMoviesFilterCheckbox()
+    props.startFilter()
   }
+  useEffect(() => {
+    handelCheckbox()
+  }, [isStateCheckbox])
 
   return (
     <>
@@ -52,7 +58,7 @@ function SearchFormSaved(props) {
               Найти
             </button>
           </form>
-          <div className="search-form__box-btn">
+          <div className="search-form__box-btn search-form__box-btn_save">
             <label className="label-checkbox">
               Короткометражки
               <input

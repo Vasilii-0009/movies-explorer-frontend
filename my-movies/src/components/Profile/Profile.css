@@ -2,6 +2,7 @@
   background-color: #202020;
   padding: 74px 0 70px 0;
   min-height: 100%;
+  flex: 1 1 auto;
 }
 
 .profile__box {

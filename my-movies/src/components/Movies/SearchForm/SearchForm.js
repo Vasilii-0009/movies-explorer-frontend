@@ -28,9 +28,7 @@ function SearchForm(props) {
 
   function handleFormSubmit(dataMeassage) {
     localStorage.setItem("messageSearch", dataMeassage.film);
-    console.log('нажимаю на кнопку поиска')
     if (FilmsFromLocalStorage === null) {
-      console.log('делаю запрос на сервер за фильмами')
       props.searchMovies();
     }
 
@@ -61,6 +59,7 @@ function SearchForm(props) {
       <section className="search-form">
         <div className="search-form__container container">
           <form
+
             onSubmit={handleSubmit(handleFormSubmit)}
             className="search-form__box"
           >
@@ -71,13 +70,13 @@ function SearchForm(props) {
                   value: moviesSearchText,
                   required: "Нужно ввести ключевое слово",
                 }
-                // { value: moviesSearchText }
               )}
               className="search-form__input"
               type="text"
               placeholder="Фильм"
-            ></input>
-            <button type="submit" className="search-form__btn">
+              disabled={props.isDisabled ? true : false}
+            />
+            <button disabled={props.isDisabled ? true : false} type="submit" className="search-form__btn">
               Найти
             </button>
           </form>

@@ -18,17 +18,15 @@
   margin-bottom: 6px;
 }
 
-.window-form__register-password {
-  margin-bottom: 0px;
-}
-
 .window-form__input-general:focus {
   transition: all 0.3s linear;
   border-color: #ee3465;
 }
+
 .window-form__error-box {
   height: 18px;
 }
+
 .window-form__error-general_text {
   font-weight: 400;
   font-size: 10px;

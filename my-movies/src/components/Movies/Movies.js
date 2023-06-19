@@ -18,10 +18,11 @@ function Movies() {
   const [isGetMoviesLocalStorag, setGetMoviesLocalStorag] = useState(false)
   const [isStateForCheckLike, setStateForCheckLike] = useState(false)
   const [isStateForSaveMovies, setStateForSaveMovies] = useState(false)
-
+  const [isDisabled, setDisabled] = useState(false)
 
   //Поиск фильмов
   function searchMovies() {
+    setDisabled(true);
     setPreloader(true);
 
     DataMoviesApi.searhcMovies()
@@ -42,6 +43,7 @@ function Movies() {
           setConditionSectionBtn(true);
           setStateForSaveMovies(true);
           setErrorMessage('')
+          setDisabled(false)
         }
       })
       .catch((err) => {
@@ -81,8 +83,6 @@ function Movies() {
     }
   }, [isStateForSaveMovies]);
 
-
-  //test
   //проверяем карточку с фильмом есть ли у неё id польвателя и добавляем ЛАЙК
   function checkLike() {
     setStateForCheckLike(false)
@@ -94,9 +94,7 @@ function Movies() {
       })
     })
   }
-  //test
 
-  //test
   // получаем фильмы после перезагрузки страницы 
   useEffect(() => {
     if (FilmsFromLocalStorage && isStateForCheckLike) {
@@ -105,29 +103,27 @@ function Movies() {
       setGetMoviesLocalStorag(true);
       checkLike();
       setConditionSectionBtn(true);
+      setDisabled(false)
       if (isArrayMovies.length > 0) {
         setPreloader(false);
       }
     }
   }, [isGetMoviesLocalStorag, isStateForCheckLike, isConditonSectionBtn])
-  //test
 
-  //test
   //получаем фильмы по клику на кнонку поиска 
   function searchMoviesLocalStorag() {
-    console.log('получаем фильмы по клику на кнонку поиска ')
+    setDisabled(true)
     setPreloader(true);
     setStateForSaveMovies(true);
     return setErrorMessage('');
   }
   if (isStateForCheckLike && isStateForSaveMovies) {
+    setDisabled(false)
     setPreloader(false);
     checkLike()
     setArrayMovies(FilmsFromLocalStorage)
-
+    setDisabled(false)
   }
-  //tets
-
 
   //создаем карточку фильма, которая будет добавлена  в сохраненые фильмы
   function handelCreatCardMovies(data, event) {
@@ -145,8 +141,6 @@ function Movies() {
     const nameRU = data.nameRU;
     const nameEN = data.nameEN;
     if (event.target.classList.contains("card__btn-like-active")) {
-      console.log("удаляем карточку");
-
       likeBtn.classList.remove("card__btn-like-active");
       DataAuthApi.deleteMovies(data._id)
         .then((dataDelete) => {
@@ -156,7 +150,6 @@ function Movies() {
           console.log(`Карточка не удалена (код ошибки): ${err}`);
         });
     } else {
-      console.log("сохраняем карточку");
       likeBtn.classList.add("card__btn-like-active");
       DataAuthApi.creatCardMovies(
         country,
@@ -173,9 +166,6 @@ function Movies() {
       )
         .then((dataSave) => {
           data._id = dataSave.movies._id;
-          console.log('добавили айди чтобы отображть лайк')
-          console.log('dataSave', dataSave)
-
         })
         .catch((err) => {
           console.log(`Карточка не сохранена  (код ошибки): ${err}`);
@@ -189,7 +179,7 @@ function Movies() {
         <SearchForm
           searchMovies={searchMovies}
           searchMoviesLocalStorag={searchMoviesLocalStorag}
-
+          isDisabled={isDisabled}
         />
         {isPreloader ? (
           <section className="preloader">
@@ -206,6 +196,7 @@ function Movies() {
             isMessageErrorCardMovies={isMessageErrorCardMovies}
             searchMovies={searchMovies}
             handelCreatCardMovies={handelCreatCardMovies}
+
           />
         )}
       </section>

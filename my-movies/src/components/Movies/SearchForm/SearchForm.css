@@ -114,8 +114,9 @@
 .search-form__line {
   width: 100%;
   border-bottom: 1px solid #424242;
-  margin-top: 40px;
+  margin: 40px 0 80px 0;
 }
+
 /* checkbox */
 .label-checkbox {
   position: relative;

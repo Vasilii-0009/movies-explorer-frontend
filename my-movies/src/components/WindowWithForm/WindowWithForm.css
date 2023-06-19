@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   min-height: 100%;
+  flex: 1 1 auto;
 }
 
 .window-form__box {

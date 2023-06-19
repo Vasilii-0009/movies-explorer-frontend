@@ -1,0 +1,15 @@
+const MyConst = {
+   DURATION_SHORT_MOVIES: 40,
+   COUNT_FOR_DESKTOP: 12,
+   COUNT_FOR_TABLET: 8,
+   COUNT_FOR_MOBIL: 5,
+   BREAKPOINT: 768,
+   BREAKPOINT_MOBIL: 420,
+   ZERO: 0,
+   PLUS_CARDS_DESKTOP: 3,
+   PLUS_CARDS_TABELT: 2,
+   SECTION_MORE_VISIBILITY: 'block-more-visibiliti',
+   CLASS_BLOCK_MORE: 'bloke-more-hiden'
+}
+
+export default MyConst;

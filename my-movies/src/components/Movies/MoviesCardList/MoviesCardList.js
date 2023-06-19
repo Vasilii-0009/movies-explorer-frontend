@@ -3,19 +3,29 @@ import React, { useEffect, useState } from "react";
 import MoviesGeneralLIstCards from "../../MoviesGeneral/MoviesGeneralLIstCards/MoviesGeneralLIstCards";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import BtnMore from "../BtnMore/BtnMore";
+import MyConst from "../../MyConst/MyConst"
 
 function MoviesCardsList(props) {
+  const { DURATION_SHORT_MOVIES,
+    COUNT_FOR_DESKTOP,
+    COUNT_FOR_TABLET,
+    COUNT_FOR_MOBIL,
+    BREAKPOINT,
+    BREAKPOINT_MOBIL,
+    ZERO,
+    PLUS_CARDS_DESKTOP,
+    PLUS_CARDS_TABELT,
+  } = MyConst
+
   const [isFilms, setFilms] = useState([]);
   const [isConditonBtn, setConditionBtn] = useState(false);
   // error
   const [isErrorCardMovies, setErrorCardMovies] = useState(false);
-  // const [isMessageErrorCardMovies, setMessageErrorCardMovies] =
-  //   useState("Ничего не найдено");
 
   //cont
-  const [isCont, setCont] = useState(12);
-  const [isTabletCont, seTablettCont] = useState(8);
-  const [isMobilCont, setMobilCont] = useState(5);
+  const [isCont, setCont] = useState(COUNT_FOR_DESKTOP);
+  const [isTabletCont, seTablettCont] = useState(COUNT_FOR_TABLET);
+  const [isMobilCont, setMobilCont] = useState(COUNT_FOR_MOBIL);
 
   //localStorage
   const statusInput = localStorage.getItem("messageSearch");
@@ -33,7 +43,7 @@ function MoviesCardsList(props) {
   //filtereCheckbox
   const getFilterCheckbox = () => {
     return filterMovies.filter((item) => {
-      return item.duration <= 40;
+      return item.duration <= DURATION_SHORT_MOVIES;
     });
   };
   const filterMoviesCheckbox = getFilterCheckbox();
@@ -45,11 +55,7 @@ function MoviesCardsList(props) {
   const resMovies = jsonStatusCkeckbox ? filterMoviesCheckbox : filterMovies;
 
   // resize
-
   const [width, setWidth] = useState(window.innerWidth);
-
-  const breakpoint = 768;
-  const breakpointMobil = 420;
 
   useEffect(() => {
     const handleResizeWindow = () => setWidth(window.innerWidth);
@@ -62,38 +68,38 @@ function MoviesCardsList(props) {
 
   // в зависимости от ширина экрана отобрашается разное количество карточек
   useEffect(() => {
-    if (resMovies.length <= 0 && props.isConditonSectionBtn) {
+    if (resMovies.length <= ZERO && props.isConditonSectionBtn) {
       setErrorCardMovies(true);
     }
-    if (width > breakpoint) {
-      setFilms(resMovies.slice(0, isCont));
+    if (width > BREAKPOINT) {
+      setFilms(resMovies.slice(ZERO, isCont));
     }
-    if (width <= breakpoint && width >= breakpointMobil) {
-      setFilms(resMovies.slice(0, isTabletCont));
+    if (width <= BREAKPOINT && width >= BREAKPOINT_MOBIL) {
+      setFilms(resMovies.slice(ZERO, isTabletCont));
     }
-    if (width <= breakpointMobil) {
-      setFilms(resMovies.slice(0, isMobilCont));
+    if (width <= BREAKPOINT_MOBIL) {
+      setFilms(resMovies.slice(ZERO, isMobilCont));
     }
   }, [width, props.isArrayMovies]);
 
   // добавялем карточки по клику
   function handleShowCardFilmsBtn() {
-    if (width > breakpoint) {
-      setCont((prev) => prev + 3);
-      const finFilms = generalFilterCont.slice(0, isCont + 3);
+    if (width > BREAKPOINT) {
+      setCont((prev) => prev + PLUS_CARDS_DESKTOP);
+      const finFilms = generalFilterCont.slice(ZERO, isCont + PLUS_CARDS_DESKTOP);
 
       setFilms(finFilms);
     }
 
-    if (width <= breakpoint && width >= breakpointMobil) {
-      seTablettCont(isTabletCont + 2);
-      const finFilms = generalFilterCont.slice(0, isTabletCont + 2);
+    if (width <= BREAKPOINT && width >= BREAKPOINT_MOBIL) {
+      seTablettCont(isTabletCont + PLUS_CARDS_TABELT);
+      const finFilms = generalFilterCont.slice(ZERO, isTabletCont + PLUS_CARDS_TABELT);
 
       setFilms(finFilms);
     }
-    if (width <= breakpointMobil) {
-      setMobilCont(isTabletCont + 2);
-      const finFilms = generalFilterCont.slice(0, isMobilCont + 2);
+    if (width <= BREAKPOINT_MOBIL) {
+      setMobilCont(isTabletCont + PLUS_CARDS_TABELT);
+      const finFilms = generalFilterCont.slice(ZERO, isMobilCont + PLUS_CARDS_TABELT);
 
       setFilms(finFilms);
     }

@@ -4,6 +4,7 @@ import { DataAuthApi } from "../../utils/MainApi";
 import MoviesCardList from './MoviesCardList/MoviesCardList'
 import SearchFormSaved from "./SearchFormSaved/SearchFromSaved";
 import Preloader from "../Preloader/Preloader";
+
 const saveMovies = (textSearch, arrMovies) => {
   if (!textSearch) {
     return arrMovies
@@ -87,8 +88,6 @@ function SavedMovies() {
   function handelMoviesFilterCheckbox() {
     const statusInputSave = localStorage.getItem("messageSearchSave")
     const jsonStatusCkeckboxSave = JSON.parse(localStorage.getItem('stateCheckboxSave'));
-    const resFilter = saveMoviesCheckbox(jsonStatusCkeckboxSave, isAllSavedMovies)
-    setFilterSavedMovies(resFilter)
     if (jsonStatusCkeckboxSave) {
       filterMoviesCheckbox(statusInputSave, isAllSavedMovies)
     } else {
@@ -101,6 +100,7 @@ function SavedMovies() {
     localStorage.setItem("messageSearchSave", '');
     if (isPreloader) {
       setFilterSavedMovies(isAllSavedMovies)
+      setError(false)
     }
   }, [isPreloader])
 
@@ -120,7 +120,6 @@ function SavedMovies() {
             }
           })
         );
-
       })
       .catch((err) => {
         console.log(`Карточка не удалена (код ошибки): ${err}`);

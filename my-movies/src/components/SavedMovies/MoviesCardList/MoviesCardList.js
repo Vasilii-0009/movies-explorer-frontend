@@ -1,25 +1,34 @@
 import React from "react";
-import MoviesGeneralLIstCards from '../../MoviesGeneral/MoviesGeneralLIstCards/MoviesGeneralLIstCards'
-import saveCards from '../../../utils/saveCards'
-import MoviesCard from '../MoviesCard/MoviesCard'
-import './MoviesCardList.css'
+import "./MoviesCardList.css";
+import MoviesGeneralLIstCards from "../../MoviesGeneral/MoviesGeneralLIstCards/MoviesGeneralLIstCards";
+import MoviesCard from "../MoviesCard/MoviesCard";
+import ErrorMessage from "../../ErrorMessage/ErrorMessage"
 
-function SaveMoviesCardList() {
-   const cardSpace = (`card-list-space`)
-   return (
+
+function SaveMoviesCardList(props) {
+  const cardSpace = `card-list-space`
+  return (
+    <>
+      {props.isError ? <ErrorMessage /> : ""}
       <MoviesGeneralLIstCards cardSpace={cardSpace}>
-         {
-            saveCards.map((card, index) => {
-
-               return (
-                  <MoviesCard cardInfo={card} key={index} />
-               )
-            })
-         }
-
+        <>
+          {props.arrMovies.map((card, index) => {
+            return (
+              <MoviesCard
+                handelDeleteMovies={props.handelDeleteMovies}
+                cardInfo={card}
+                key={index}
+              />
+            );
+          })}
+        </>
 
       </MoviesGeneralLIstCards>
-   )
+
+    </>
+
+
+  );
 }
 
 export default SaveMoviesCardList;
